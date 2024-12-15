@@ -2620,7 +2620,7 @@ MonoBehaviour:
     m_Bits: 128
   playerCameraTransform: {fileID: 1620284083}
   pickUpUI: {fileID: 1241328892}
-  hitRange: 3
+  hitRange: 5
   pickUpParent: {fileID: 969861020}
   inHandItem: {fileID: 0}
   interactionInput: {fileID: 5730319893165603036, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
