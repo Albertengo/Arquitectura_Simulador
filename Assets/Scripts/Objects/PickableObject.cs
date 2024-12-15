@@ -2,26 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickableItem : MonoBehaviour, IPickable
+public class PickableObject : MonoBehaviour, IPickable
 {
     [field: SerializeField]
-    public bool KeepWorldPosition { get; private set; }
+    public bool KeepWorldPosition { get; private set; } = true;
 
-    private Rigidbody rb;
+    Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-
     public GameObject PickUp()
     {
         if (rb != null)
-        {
             rb.isKinematic = true;
-        }
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-        return this.gameObject;
+
+        return gameObject;
     }
 }
