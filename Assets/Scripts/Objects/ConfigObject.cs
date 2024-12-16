@@ -6,11 +6,7 @@ using UnityEngine.InputSystem;
 public class ConfigObject : MonoBehaviour
 {
     float rotation_degree = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float scale_Speed = 1;
 
     // Update is called once per frame
     void Update()
@@ -22,8 +18,24 @@ public class ConfigObject : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, rotation_degree, 0);
         rotation_degree = rotation_degree + 10;
     }
-    public void test()
-    {
 
+    public void Length()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.1f * scale_Speed, transform.localScale.z);
+    }
+
+    public void Short()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y - 0.1f * scale_Speed, transform.localScale.z);
+    }
+
+    public void Wide()
+    {
+        transform.localScale = new Vector3(transform.localScale.x + 0.1f * scale_Speed, transform.localScale.y, transform.localScale.z);
+    }
+
+    public void Narrow()
+    {
+        transform.localScale = new Vector3(transform.localScale.x + 0.1f * scale_Speed, transform.localScale.y, transform.localScale.z);
     }
 }

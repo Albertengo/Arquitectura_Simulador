@@ -63,7 +63,7 @@ public class Player_PickUp : MonoBehaviour
                 //pickUpSource.Play();
                 inHandItem = pickableItem.PickUp();
                 inHandItem.transform.SetParent(pickUpParent.transform, pickableItem.KeepWorldPosition);
-                Debug.Log("cubo agarrado");
+                //Debug.Log("cubo agarrado");
             }
         }
     }
