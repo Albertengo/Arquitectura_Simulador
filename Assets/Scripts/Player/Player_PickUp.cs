@@ -64,6 +64,7 @@ public class Player_PickUp : MonoBehaviour
                 //pickUpSource.Play();
                 inHandItem = pickableItem.PickUp();
                 inHandItem.transform.SetParent(pickUpParent.transform, pickableItem.KeepWorldPosition);
+                Debug.Log("cubo agarrado");
             }
         }
     }
@@ -95,7 +96,8 @@ public class Player_PickUp : MonoBehaviour
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickable_Layer))
         {
             hit.collider.GetComponent<Highlight>()?.ToggleHighlight(true);
-            pickUpUI.SetActive(true);
+            if (hit.collider.CompareTag("InstructionCube"))
+                pickUpUI.SetActive(true);
         }
     }
     #endregion
