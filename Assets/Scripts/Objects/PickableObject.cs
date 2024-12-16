@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickableObject : MonoBehaviour, IPickable
 {
+    //Script para los objetos agarrables (desactiva su fisica normal)
+
     [field: SerializeField]
     public bool KeepWorldPosition { get; private set; } = true;
 

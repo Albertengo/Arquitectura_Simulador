@@ -7,31 +7,27 @@ using UnityEngine.InputSystem;
 
 public class Player_PickUp : MonoBehaviour
 {
-    //[SerializeField]
+    //Script que se encarga de la mecánica de agarre del player
+
     public LayerMask pickable_Layer;
 
-    //[SerializeField]
     public Transform playerCameraTransform;
-
-    [SerializeField]
-    private GameObject pickUpUI;
+    [SerializeField] private Transform pickUpParent;
 
     [Min(1)]
     public float hitRange = 3;
 
-    [SerializeField]
-    private Transform pickUpParent;
-
-    [SerializeField]
+    [SerializeField] private GameObject pickUpUI;
     private GameObject inHandItem;
 
+    [Space(32)]
     [SerializeField]
     private InputActionReference interactionInput, dropInput, useInput;
 
     private RaycastHit hit;
 
-    [SerializeField]
-    private AudioSource pickUpSource;
+    //[SerializeField]
+    //private AudioSource pickUpSource;
 
     private void Start()
     {
@@ -63,7 +59,6 @@ public class Player_PickUp : MonoBehaviour
                 //pickUpSource.Play();
                 inHandItem = pickableItem.PickUp();
                 inHandItem.transform.SetParent(pickUpParent.transform, pickableItem.KeepWorldPosition);
-                //Debug.Log("cubo agarrado");
             }
         }
     }
