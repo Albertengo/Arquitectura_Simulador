@@ -5,14 +5,10 @@ using UnityEngine.InputSystem;
 
 public class ConfigObject : MonoBehaviour
 {
+    //Script que se encarga de la personalizacion del objeto
     float rotation_degree = 10;
     float scale_Speed = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Rotation();
-    }
     public void Rotation()
     {
         transform.rotation = Quaternion.Euler(0, rotation_degree, 0);
@@ -36,6 +32,6 @@ public class ConfigObject : MonoBehaviour
 
     public void Narrow()
     {
-        transform.localScale = new Vector3(transform.localScale.x + 0.1f * scale_Speed, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x - 0.1f * scale_Speed, transform.localScale.y, transform.localScale.z);
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class Player_Input_Obj : MonoBehaviour
 {
     //optimizar codigo haciendo un void aparte q chequee con el if y rotate_obj dentro?
+    //Script que se encarga de activar la personalizacion de los objetos a través de Inputs
     [SerializeField]
     private InputActionReference rotateInput, lengthenInput, shortenInput, widenInput, narrowInput;
     private RaycastHit hit;
@@ -20,18 +21,11 @@ public class Player_Input_Obj : MonoBehaviour
         Debug.Log("Inputs activados");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void Rotate_Obj(InputAction.CallbackContext obj)
     {
-        //Debug.Log("R presionada");
         if (Physics.Raycast(this.gameObject.GetComponent<Player_PickUp>().playerCameraTransform.position, this.gameObject.GetComponent<Player_PickUp>().playerCameraTransform.forward, out hit, this.gameObject.GetComponent<Player_PickUp>().hitRange, this.gameObject.GetComponent<Player_PickUp>().pickable_Layer)) //(hit.collider != null)
         {
             hit.collider.GetComponent<ConfigObject>()?.Rotation();
-            //Debug.Log("Intentando Rotar");
         }
     }
 
