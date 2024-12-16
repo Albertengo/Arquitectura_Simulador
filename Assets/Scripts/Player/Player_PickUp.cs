@@ -7,18 +7,17 @@ using UnityEngine.InputSystem;
 
 public class Player_PickUp : MonoBehaviour
 {
-    [SerializeField]
-    private LayerMask pickable_Layer;
+    //[SerializeField]
+    public LayerMask pickable_Layer;
 
-    [SerializeField]
-    private Transform playerCameraTransform;
+    //[SerializeField]
+    public Transform playerCameraTransform;
 
     [SerializeField]
     private GameObject pickUpUI;
 
-    [SerializeField]
     [Min(1)]
-    private float hitRange = 3;
+    public float hitRange = 3;
 
     [SerializeField]
     private Transform pickUpParent;

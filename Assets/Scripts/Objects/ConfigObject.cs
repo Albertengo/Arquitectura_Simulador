@@ -20,7 +20,7 @@ public class ConfigObject : MonoBehaviour
     public void Rotation()
     {
         transform.rotation = Quaternion.Euler(0, rotation_degree, 0);
-        Debug.Log("Rotando");
+        rotation_degree = rotation_degree + 10;
     }
     public void test()
     {

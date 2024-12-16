@@ -26,11 +26,11 @@ public class Player_Input_Obj : MonoBehaviour
     }
     private void Rotate_Obj(InputAction.CallbackContext obj)
     {
-        if (hit.collider != null)
+        //Debug.Log("R presionada");
+        if (Physics.Raycast(this.gameObject.GetComponent<Player_PickUp>().playerCameraTransform.position, this.gameObject.GetComponent<Player_PickUp>().playerCameraTransform.forward, out hit, this.gameObject.GetComponent<Player_PickUp>().hitRange, this.gameObject.GetComponent<Player_PickUp>().pickable_Layer)) //(hit.collider != null)
         {
-            hit.collider.gameObject.GetComponent<ConfigObject>()?.Rotation();
-            Debug.Log("Intentando Rotar");
-            //ConfigObject.test();
+            hit.collider.GetComponent<ConfigObject>()?.Rotation();
+            //Debug.Log("Intentando Rotar");
         }
     }
 
