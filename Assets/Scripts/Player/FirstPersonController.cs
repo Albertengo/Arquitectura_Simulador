@@ -22,8 +22,8 @@ namespace StarterAssets
 
 		[Header("Cinemachine")]
 		public GameObject CinemachineCameraTarget;
-		public float TopClamp = 90.0f; //que tanto puede moverse la camara hacia arriba
-        public float BottomClamp = -90.0f; //que tanto puede moverse la camara hacia abajo
+		public float TopClamp = 90.0f; //que tanto puede moverse la camara
+        public float BottomClamp = -90.0f;
 		private float _cinemachineTargetPitch;
 
 		// player
@@ -36,7 +36,7 @@ namespace StarterAssets
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
 
-		private const float _threshold = 0.01f;
+		private const float _Min = 0.01f; //magnitud minima para que se considere mover la cámara
 
         #endregion
 
@@ -77,17 +77,18 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-		private void CameraRotation()
+        #region Code
+        private void CameraRotation()
 		{
-			if (_input.look.sqrMagnitude >= _threshold)
+			if (_input.look.sqrMagnitude >= _Min)
 			{
-				//Don't multiply mouse input by Time.deltaTime
+				//si se usa mouse, no multiplica a tiempo real porque ya lo tiene incorporado
 				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 				
 				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
 				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-				// clamp our pitch rotation (para que sea más smooth la rotacion de la cámara)
+				//para que sea más smooth la rotacion de la cámara y tenga límites
 				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
 				// Update Cinemachine camera target pitch
@@ -100,16 +101,11 @@ namespace StarterAssets
 
 		private void Move()
 		{
-			// set target speed based on move speed, sprint speed and if sprint is pressed
+			// si se sprintea, velocidad de sprint; si no, velocidad normal
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
-			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
+			if (_input.move == Vector2.zero) targetSpeed = 0.0f; //si player no se mueve, velocidad 0
 
-			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is no input, set the target speed to 0
-			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
-
-			// a reference to the players current horizontal velocity
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			float speedOffset = 0.1f;
@@ -119,8 +115,6 @@ namespace StarterAssets
 			{
 				// cambio de velocidad más orgánico
 				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-
-				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
 			}
 			else
@@ -129,23 +123,20 @@ namespace StarterAssets
 			}
 
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
-			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is a move input rotate player when the player is moving
-			if (_input.move != Vector2.zero)
-			{
-				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+			if (_input.move != Vector2.zero) //ajusta la dirección del jugador
+            {
+                inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 			}
 
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 		}
 		
-		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+		private static float ClampAngle(float Angle, float Min, float Max)
 		{
-			if (lfAngle < -360f) lfAngle += 360f;
-			if (lfAngle > 360f) lfAngle -= 360f;
-			return Mathf.Clamp(lfAngle, lfMin, lfMax);
+			if (Angle < -360f) Angle += 360f;
+			if (Angle > 360f) Angle -= 360f;
+			return Mathf.Clamp(Angle, Min, Max); //para que la camara no se pase del angulo deseado
 		}
-
-	}
+        #endregion
+    }
 }
